@@ -107,7 +107,7 @@ if g:conque_gdb_gdb_py_support
     exe 'nnoremap <silent> ' . g:ConqueGdb_ToggleBreak . ' :call conque_gdb#toggle_breakpoint(expand("%:p"), line("."))<CR>'
 else
     exe 'nnoremap <silent> ' . g:ConqueGdb_SetBreak . ' :call conque_gdb#command("break " . expand("%:p") . ":" . line("."))<CR>'
-    exe 'nnoremap <silent> ' . g:ConqueGdb_DeleteBreak . ' :call conque_gdb#command("clear " . expand("%:p") . ":" . line("."))<CR>'
+    " exe 'nnoremap <silent> ' . g:ConqueGdb_DeleteBreak . ' :call conque_gdb#command("clear " . expand("%:p") . ":" . line("."))<CR>'
 endif
 exe 'nnoremap <silent> ' . g:ConqueGdb_Continue . ' :call conque_gdb#command("continue")<CR>'
 exe 'nnoremap <silent> ' . g:ConqueGdb_Run . ' :call conque_gdb#command("run")<CR>'

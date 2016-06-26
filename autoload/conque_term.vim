@@ -75,6 +75,9 @@ let g:ConqueTerm_TerminalsString = ''
 " init terminal counter
 let g:ConqueTerm_Idx = 0
 
+" conque term is opened flag
+let g:ConqueTerm_opened = 0
+
 " to save the users &updatetime. This is not a constant
 let s:save_updatetime = &updatetime
 
@@ -498,6 +501,7 @@ function! conque_term#open(...) "{{{
     let g:ConqueTerm_Idx += 1
     let g:ConqueTerm_Var = 'ConqueTerm_' . g:ConqueTerm_Idx
     let g:ConqueTerm_BufName = substitute(command, ' ', '\\ ', 'g') . "\\ -\\ " . g:ConqueTerm_Idx
+    let g:ConqueTerm_opened = 1
 
     " initialize global mappings if needed
     call conque_term#init()
@@ -724,7 +728,9 @@ function! conque_term#set_mappings(action) "{{{
     if !exists('g:ConqueTerm_EscKey') || g:ConqueTerm_EscKey =~ '<[Ee][Ss][Cc]>'
         " use <Esc><Esc> to send <Esc> to terminal
         if l:action == 'start'
-            sil exe 'i' . map_modifier . 'map <silent> <buffer> <Esc><Esc> <C-o>:' . s:py . ' ' . b:ConqueTerm_Var . '.write_ord(27)<CR>'
+            " sil exe 'i' . map_modifier . 'map <silent> <buffer> <Esc><Esc> <C-o>:' . s:py . ' ' . b:ConqueTerm_Var . '.write_ord(27)<CR><ESC><C-W><C-P>'
+            " modify by tyg  
+            sil exe 'i' . map_modifier . 'map <silent> <buffer> <Esc><ESC> ' . '<ESC><C-W><C-P>'
         else
             sil exe 'i' . map_modifier . 'map <silent> <buffer> <Esc><Esc>'
         endif
@@ -896,17 +902,18 @@ function! conque_term#set_mappings(action) "{{{
     endif
     " }}}
 
-    " various global mappings {{{
-    " don't overwrite existing mappings
-    if l:action == 'start'
-        if maparg(g:ConqueTerm_SendVisKey, 'v') == ''
-          sil exe 'v' . map_modifier . 'map <silent> ' . g:ConqueTerm_SendVisKey . ' :<C-u>call conque_term#send_selected(visualmode())<CR>'
-        endif
-        if maparg(g:ConqueTerm_SendFileKey, 'n') == ''
-          sil exe 'n' . map_modifier . 'map <silent> ' . g:ConqueTerm_SendFileKey . ' :<C-u>call conque_term#send_file()<CR>'
-        endif
-    endif
-    " }}}
+    " " various global mappings {{{
+    " " don't overwrite existing mappings
+    " " disable by tanyongguang tyg
+    " if l:action == 'start'
+    "     if maparg(g:ConqueTerm_SendVisKey, 'v') == ''
+    "       sil exe 'v' . map_modifier . 'map <silent> ' . g:ConqueTerm_SendVisKey . ' :<C-u>call conque_term#send_selected(visualmode())<CR>'
+    "     endif
+    "     if maparg(g:ConqueTerm_SendFileKey, 'n') == ''
+    "       sil exe 'n' . map_modifier . 'map <silent> ' . g:ConqueTerm_SendFileKey . ' :<C-u>call conque_term#send_file()<CR>'
+    "     endif
+    " endif
+    " " }}}
 
     " remap paste keys {{{
     if l:action == 'start'
@@ -957,11 +964,11 @@ function! conque_term#set_mappings(action) "{{{
     endif
     " }}}
 
-    " map command to toggle terminal key mappings {{{
-    if a:action == 'start'
-        sil exe 'nnoremap ' . g:ConqueTerm_ToggleKey . ' :<C-u>call conque_term#set_mappings("toggle")<CR>'
-    endif
-    " }}}
+"     " map command to toggle terminal key mappings {{{
+"     if a:action == 'start'
+"         sil exe 'nnoremap ' . g:ConqueTerm_ToggleKey . ' :<C-u>call conque_term#set_mappings("toggle")<CR>'
+"     endif
+"     " }}}
 
     " call user defined functions
     if l:action == 'start'
@@ -1545,6 +1552,7 @@ function! s:term_obj.close() dict " {{{
 
     " rebuild session options
     let g:ConqueTerm_TerminalsString = string(g:ConqueTerm_Terminals)
+    let g:ConqueTerm_opened = 0
 
     " Reset update time if this is the last terminal
     if s:term_count <= 1

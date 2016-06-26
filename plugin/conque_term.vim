@@ -229,9 +229,9 @@ if exists('g:ConqueTerm_SessionSupport') && g:ConqueTerm_SessionSupport == 1
     autocmd SessionLoadPost * call conque_term#resume_session()
 endif
 
-if maparg(g:ConqueTerm_ExecFileKey, 'n') == ''
-    exe 'nnoremap <silent> ' . g:ConqueTerm_ExecFileKey . ' :call conque_term#exec_file()<CR>'
-endif
+" if maparg(g:ConqueTerm_ExecFileKey, 'n') == ''
+"     exe 'nnoremap <silent> ' . g:ConqueTerm_ExecFileKey . ' :call conque_term#exec_file()<CR>'
+" endif
 
 " }}}
 
