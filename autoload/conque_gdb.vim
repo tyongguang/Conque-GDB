@@ -328,7 +328,7 @@ function! s:get_unix_gdb()
         return ''
     endif
 
-    sil let l:gdb_py_support = system(l:gdb_exe . ' -q -batch -ex "python print(\"PYYES\")"')
+    sil let l:gdb_py_support = system(l:gdb_exe . ' -q -batch -iex "set auto-load off" -ex "python print(\"PYYES\")"')
     if l:gdb_py_support =~ ".*PYYES\n.*"
         " Gdb has python support
         let g:conque_gdb_gdb_py_support = 1
@@ -410,7 +410,7 @@ function! conque_gdb#open(...)
         endif
 
         " Find out which gdb command script gdb should execute on startup.
-        sil let l:enable_confirm = system(s:gdb_command . ' -q -batch -ex "show confirm"')
+        sil let l:enable_confirm = system(s:gdb_command . ' -q -batch -iex "set auto-load off" -ex "show confirm"')
         if l:enable_confirm =~ '.*\s\+[Oo][Nn]\W.*'
             let l:extra = ' -x ' . s:SCRIPT_DIR . 'gdbinit_confirm.gdb '
         else
