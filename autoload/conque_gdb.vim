@@ -438,6 +438,10 @@ function! conque_gdb#open(...)
 	let s:src_bufwin = winnr("#")
 endfunction
 
+function! conque_gdb#reset()
+    sil exe s:py . ' ' . s:gdb.var . '.reset_status()'
+endfunction
+
 " Send a command to the gdb subprocess.
 function! conque_gdb#command(cmd)
     if !(bufloaded(s:gdb.buffer_number) && s:gdb.active)

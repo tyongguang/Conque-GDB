@@ -109,6 +109,11 @@ class ConqueGdb(Conque):
     # Id number of the next sign to place. Start from 15607 FTW!
     next_sign_id = 15607
 
+    def reset_status(self):
+        self.prompt = None
+        self.is_prompt = False
+        self.breakpoint = None
+
     def plain_text(self, input):
         """
         Append plain text to a gdb break point or the vim buffer.

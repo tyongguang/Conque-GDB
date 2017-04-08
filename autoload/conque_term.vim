@@ -730,9 +730,11 @@ function! conque_term#set_mappings(action) "{{{
         if l:action == 'start'
             " sil exe 'i' . map_modifier . 'map <silent> <buffer> <Esc><Esc> <C-o>:' . s:py . ' ' . b:ConqueTerm_Var . '.write_ord(27)<CR><ESC><C-W><C-P>'
             " modify by tyg  
-            sil exe 'i' . map_modifier . 'map <silent> <buffer> <Esc><ESC> ' . '<ESC><C-W><C-P>'
+            sil exe 'i' . map_modifier . 'map <silent> <buffer> <F8> ' . '<ESC><C-W><C-P>'
+            sil exe 'n' . map_modifier . 'map <silent> <buffer> <F8> ' . '<C-W><C-P>'
         else
-            sil exe 'i' . map_modifier . 'map <silent> <buffer> <Esc><Esc>'
+            sil exe 'i' . map_modifier . 'map <silent> <buffer> <F8>'
+            sil exe 'n' . map_modifier . 'map <silent> <buffer> <F8>'
         endif
     else
         " use <Esc> to send <Esc> to terminal

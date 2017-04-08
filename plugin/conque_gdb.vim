@@ -100,6 +100,8 @@ command! -nargs=? -complete=file ConqueGdbExe call conque_gdb#change_gdb_exe(<q-
 " Command to delete the buffers ConqueGdb has opened
 command! -nargs=0 ConqueGdbBDelete call conque_gdb#delete_opened_buffers()
 
+command! -nargs=0 ConqueReset call conque_gdb#reset()
+
 " Command to write a command to the gdb tertminal
 command! -nargs=+ ConqueGdbCommand call conque_gdb#command(<q-args>)
 
